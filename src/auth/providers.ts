@@ -18,3 +18,5 @@ export const usecases: Provider[] = [
   { provide: SIGNUP_USER_USECASE, useClass: SignupUserUsecase },
   { provide: SIGNIN_USER_USECASE, useClass: SigninUserUsecase },
 ];
+
+export const authExportProviders: Provider[] = [{ provide: USER_SERVICE, useClass: UserService }];

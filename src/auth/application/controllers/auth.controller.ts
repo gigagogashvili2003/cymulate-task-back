@@ -25,13 +25,23 @@ export class AuthController {
   @UseGuards(LocalGuard)
   public async signin(@CurrentUser() user: IUser) {
     const tokens = await this.signinUserUsecase.execute(user);
-    return { status: HttpStatus.OK, body: tokens };
+    return {
+      status: HttpStatus.OK,
+      body: {
+        tokens: tokens,
+      },
+    };
   }
 
   @Get('me')
   @UseGuards(AccessTokenGuard)
   public me(@CurrentUser() user: IUser) {
     const serialized = plainToInstance(UserEntity, user, { excludeExtraneousValues: true });
-    return { status: HttpStatus.OK, body: serialized };
+    return {
+      status: HttpStatus.OK,
+      body: {
+        user: serialized,
+      },
+    };
   }
 }

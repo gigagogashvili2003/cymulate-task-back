@@ -8,9 +8,9 @@ export class SigninUserUsecase implements UseCase<IUser, { accessToken: string; 
   public constructor(@Inject(AUTH_SERVICE) private readonly authService: AuthService) {}
 
   public async execute(request?: IUser) {
-    const { id, email } = request;
+    const { _id, email } = request;
     const [accessToken, refreshToken] = await this.authService.signTokens({
-      sub: id.toString(),
+      sub: _id.toString(),
       email: email,
     });
 

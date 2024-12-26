@@ -5,6 +5,8 @@ import { CurrentUser } from '@app/shared/decorators';
 import { IUser } from 'src/auth/domain/types';
 import { CREATE_ATTEMPT_USECASE, GET_ATTEMPTS_USECASE, RESOLVE_ATTEMPT_USECASE } from 'src/attempts/constants';
 import { CreateAttemptUsecase, GetAttemptsUsecase, ResolveAttemptUsecase } from '../usecases';
+import { plainToInstance } from 'class-transformer';
+import { AttemptEntity } from '../entities';
 
 @Controller('attempts')
 export class AttemptsController {
@@ -24,11 +26,12 @@ export class AttemptsController {
   @Get()
   @UseGuards(AccessTokenGuard)
   public async getAttempts(@CurrentUser() currentUser: IUser) {
-    return this.getAttemptsUsecase.execute(undefined, currentUser);
+    const attempts = await this.getAttemptsUsecase.execute(undefined, currentUser);
+    const serialized = plainToInstance(AttemptEntity, attempts, { excludeExtraneousValues: true });
+    return { status: HttpStatus.OK, body: { attempts: serialized } };
   }
 
   @Get('fake/:id')
-  @UseGuards(AccessTokenGuard)
   public async resolve(@Param('id') id: string) {
     await this.resolveAttemptUsecase.execute(id);
     return { status: HttpStatus.OK, message: 'User scammed :D' };

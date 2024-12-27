@@ -2,7 +2,7 @@
 
 ## Overview
 
-A brief description of your project and its purpose.
+Cymulate Backend is an application designed to help organizations test and improve their employees' resilience to phishing attacks. By simulating phishing attempts and monitoring which employees fall for these attacks, the application provides insights into potential security vulnerabilities within the company. This tool is intended for internal use to strengthen corporate security by identifying and addressing weaknesses in employee awareness.
 
 ## Prerequisites
 
